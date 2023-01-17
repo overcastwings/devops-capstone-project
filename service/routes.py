@@ -61,6 +61,7 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
+
 @app.route("/accounts", methods=["GET"])
 def list_accounts():
     """
@@ -71,7 +72,7 @@ def list_accounts():
     account_list = [acct.serialize() for acct in accounts]
 
     app.logger.info(f"Returning {len(account_list)} accounts.")
-    return jsonify(account_list), status.HTTP_200_OK    
+    return jsonify(account_list), status.HTTP_200_OK
 
 
 ######################################################################
@@ -93,6 +94,7 @@ def read_account(id):
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
+
 
 @app.route("/accounts/<int:id>", methods=["PUT"])
 def update_accounts(id):
@@ -121,10 +123,8 @@ def delete_account(id):
     account = Account.find(id)
     if account:
         account.delete()
-    
+        
     return "", status.HTTP_204_NO_CONTENT
-
-
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
