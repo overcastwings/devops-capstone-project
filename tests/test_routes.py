@@ -121,6 +121,22 @@ class TestAccountService(TestCase):
         response = self.client.get(f"{BASE_URL}/{0}", content_type = "application/json")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_update_account(self):
+        """It should update an existing account"""
+        # Creation of account to be updated.
+        test_account = AccountFactory()
+        response = self.client.post(BASE_URL, json=test_account.serialize())
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Account update
+        new_account = response.get_json()
+        new_account["name"] = "Pikachu"
+        put_response = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
+        self.assertEqual(put_response.status_code, status.HTTP_200_OK)
+        updated_account = put_response.get_json()
+        self.assertEqual(updated_account["name"], "Pikachu")
+
+
     def test_bad_request(self):
         """It should not Create an Account when sending the wrong data"""
         response = self.client.post(BASE_URL, json={"name": "not enough data"})
