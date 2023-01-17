@@ -136,6 +136,13 @@ class TestAccountService(TestCase):
         updated_account = put_response.get_json()
         self.assertEqual(updated_account["name"], "Pikachu")
 
+    def test_get_account_list(self):
+        """It should get a list of accounts"""
+        self._create_accounts(5)
+        response = self.client.get(BASE_URL)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_data = response.get_json()
+        self.assertEqual(len(response_data), 5)
 
     def test_bad_request(self):
         """It should not Create an Account when sending the wrong data"""
