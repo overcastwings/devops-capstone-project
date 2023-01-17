@@ -123,7 +123,6 @@ def delete_account(id):
     account = Account.find(id)
     if account:
         account.delete()
-        
     return "", status.HTTP_204_NO_CONTENT
 
 ######################################################################
