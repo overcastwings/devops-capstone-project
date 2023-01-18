@@ -114,14 +114,14 @@ class TestAccountService(TestCase):
     def test_read_an_account(self):
         """It should read a single account"""
         account = self._create_accounts(1)[0]
-        response = self.client.get(f"{BASE_URL}/{account.id}", content_type = "application/json")
+        response = self.client.get(f"{BASE_URL}/{account.id}", content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_data = response.get_json()
         self.assertEqual(response_data["name"], account.name)
 
     def test_account_not_found(self):
         """It should not read accounts if not found"""
-        response = self.client.get(f"{BASE_URL}/{0}", content_type = "application/json")
+        response = self.client.get(f"{BASE_URL}/{0}", content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_account(self):
@@ -175,7 +175,7 @@ class TestAccountService(TestCase):
 
     def test_security_headers(self):
         """It should retrieve security headers"""
-        response = self.client.get("/", environ_overrides = HTTPS_ENVIRON)
+        response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         expected_headers = {
             'X-Frame-Options': 'SAMEORIGIN',
@@ -189,7 +189,7 @@ class TestAccountService(TestCase):
 
     def test_cors_security(self):
         """It should return a CORS header"""
-        response = self.client.get("/", environ_overrides = HTTPS_ENVIRON)
+        response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
 
